@@ -1,0 +1,38 @@
+import { Injectable } from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {switchMap} from "rxjs";
+
+interface RegisterForm {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  constructor(private http: HttpClient) { }
+
+  csrf() {
+    return this.http.get('http://localhost:8000/sanctum/csrf-cookie', {
+      headers: new HttpHeaders({
+        'X-Requested-With': 'XMLHttpRequest'
+      })
+    });
+  }
+
+  register(props: RegisterForm) {
+    return this.csrf().pipe(
+      switchMap(() => {
+        return this.http.post('http://localhost:8000/register', props, {
+          headers: new HttpHeaders({
+            'X-Requested-With': 'XMLHttpRequest'
+          })
+        });
+      })
+    );
+  }
+}
