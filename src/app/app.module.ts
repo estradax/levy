@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -17,6 +17,7 @@ import {HttpClientModule} from "@angular/common/http";
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpClientXsrfModule.withOptions(),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule

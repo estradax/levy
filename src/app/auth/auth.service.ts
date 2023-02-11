@@ -17,7 +17,8 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   csrf() {
-    return this.http.get('http://localhost:8000/sanctum/csrf-cookie', {
+    return this.http.get('//localhost:8000/sanctum/csrf-cookie', {
+      withCredentials: true,
       headers: new HttpHeaders({
         'X-Requested-With': 'XMLHttpRequest'
       })
@@ -27,7 +28,8 @@ export class AuthService {
   register(props: RegisterForm) {
     return this.csrf().pipe(
       switchMap(() => {
-        return this.http.post('http://localhost:8000/register', props, {
+        return this.http.post('//localhost:8000/register', props, {
+          withCredentials: true,
           headers: new HttpHeaders({
             'X-Requested-With': 'XMLHttpRequest'
           })
