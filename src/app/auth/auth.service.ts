@@ -16,6 +16,15 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  isAuthenticated() {
+    return this.http.get('//localhost:8000/api/user', {
+      withCredentials: true,
+      headers: new HttpHeaders({
+        'X-Requested-With': 'XMLHttpRequest',
+      })
+    });
+  }
+
   csrf() {
     return this.http.get('//localhost:8000/sanctum/csrf-cookie', {
       withCredentials: true,

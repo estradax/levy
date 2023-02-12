@@ -22,7 +22,8 @@ export class RegisterComponent {
   submit() {
     this.auth.register(this.form.value).subscribe(() => {
       this.router.navigate([''])
-        .catch(err => console.log(err));
+        .catch(err => console.log(err))
+      ;
     })
   }
 }
