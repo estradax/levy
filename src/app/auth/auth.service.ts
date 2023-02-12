@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {switchMap} from "rxjs";
+import {catchError, map, Observable, of, switchMap} from "rxjs";
 
 interface RegisterForm {
   name: string;
@@ -14,7 +14,8 @@ interface RegisterForm {
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   isAuthenticated() {
     return this.http.get('//localhost:8000/api/user', {
@@ -22,7 +23,12 @@ export class AuthService {
       headers: new HttpHeaders({
         'X-Requested-With': 'XMLHttpRequest',
       })
-    });
+    }).pipe(
+      map(() => true),
+      catchError(() => {
+        return of(false);
+      })
+    )
   }
 
   csrf() {
