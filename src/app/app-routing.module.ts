@@ -5,12 +5,17 @@ import {RegisterComponent} from "./register/register.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {RedirectIfAuthenticatedGuard} from "./auth/redirect-if-authenticated.guard";
 import {RedirectIfGuestGuard} from "./auth/redirect-if-guest.guard";
+import {EditProfileComponent} from "./edit-profile/edit-profile.component";
 
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
     canActivate: [RedirectIfGuestGuard]
+  },
+  {
+    path: 'edit-profile',
+    component: EditProfileComponent,
   },
   {
     path: 'login',
