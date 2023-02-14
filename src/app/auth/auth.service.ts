@@ -9,12 +9,30 @@ interface RegisterForm {
   password_confirmation: string;
 }
 
+export interface UserInfo {
+  id: number;
+  name: string;
+  email: string;
+  email_verified_at: string | null;
+  updated_at: string;
+  created_at: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
   constructor(private http: HttpClient) {
+  }
+
+  userInfo() {
+    return this.http.get<UserInfo>('//localhost:8000/api/user', {
+      withCredentials: true,
+      headers: new HttpHeaders({
+        'X-Requested-With': 'XMLHttpRequest'
+      })
+    });
   }
 
   isAuthenticated() {
