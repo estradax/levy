@@ -9,6 +9,11 @@ interface RegisterForm {
   password_confirmation: string;
 }
 
+interface LoginForm {
+  email: string;
+  password: string;
+}
+
 export interface UserInfo {
   id: number;
   name: string;
@@ -56,6 +61,19 @@ export class AuthService {
         'X-Requested-With': 'XMLHttpRequest'
       })
     });
+  }
+
+  login(props: LoginForm) {
+    return this.csrf().pipe(
+      switchMap(() => {
+        return this.http.post('//localhost:8000/login', props, {
+          withCredentials: true,
+          headers: new HttpHeaders({
+            'X-Requested-With': 'XMLHttpRequest'
+          })
+        })
+      })
+    );
   }
 
   register(props: RegisterForm) {
