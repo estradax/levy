@@ -14,6 +14,10 @@ interface LoginForm {
   password: string;
 }
 
+interface EditProfileForm {
+  name: string;
+}
+
 export interface UserInfo {
   id: number;
   name: string;
@@ -61,6 +65,19 @@ export class AuthService {
         'X-Requested-With': 'XMLHttpRequest'
       })
     });
+  }
+
+  editProfile(props: EditProfileForm) {
+    return this.csrf().pipe(
+      switchMap(() => {
+        return this.http.put('//localhost:8000/update-profile', props, {
+          withCredentials: true,
+          headers: new HttpHeaders({
+            'X-Requested-With': 'XMLHttpRequest'
+          })
+        })
+      })
+    );
   }
 
   login(props: LoginForm) {
