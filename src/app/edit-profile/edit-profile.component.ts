@@ -26,7 +26,7 @@ export class EditProfileComponent implements OnInit{
 
   submit() {
     this.authService.editProfile(this.form.value).subscribe(() => {
-
+      // Do something when edit profile success.
     });
   }
 }

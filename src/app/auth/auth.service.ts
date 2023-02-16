@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError, map, Observable, of, switchMap} from "rxjs";
+import {catchError, map, of, switchMap} from "rxjs";
 
 interface RegisterForm {
   name: string;
