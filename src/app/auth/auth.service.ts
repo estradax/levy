@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError, map, of, switchMap} from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, map, of, switchMap } from 'rxjs';
 
 interface RegisterForm {
   name: string;
@@ -28,42 +28,42 @@ export interface UserInfo {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   userInfo() {
     return this.http.get<UserInfo>('//localhost:8000/api/user', {
       withCredentials: true,
       headers: new HttpHeaders({
-        'X-Requested-With': 'XMLHttpRequest'
-      })
+        'X-Requested-With': 'XMLHttpRequest',
+      }),
     });
   }
 
   isAuthenticated() {
-    return this.http.get('//localhost:8000/api/user', {
-      withCredentials: true,
-      headers: new HttpHeaders({
-        'X-Requested-With': 'XMLHttpRequest',
+    return this.http
+      .get('//localhost:8000/api/user', {
+        withCredentials: true,
+        headers: new HttpHeaders({
+          'X-Requested-With': 'XMLHttpRequest',
+        }),
       })
-    }).pipe(
-      map(() => true),
-      catchError(() => {
-        return of(false);
-      })
-    )
+      .pipe(
+        map(() => true),
+        catchError(() => {
+          return of(false);
+        })
+      );
   }
 
   csrf() {
     return this.http.get('//localhost:8000/sanctum/csrf-cookie', {
       withCredentials: true,
       headers: new HttpHeaders({
-        'X-Requested-With': 'XMLHttpRequest'
-      })
+        'X-Requested-With': 'XMLHttpRequest',
+      }),
     });
   }
 
@@ -73,9 +73,9 @@ export class AuthService {
         return this.http.put('//localhost:8000/update-profile', props, {
           withCredentials: true,
           headers: new HttpHeaders({
-            'X-Requested-With': 'XMLHttpRequest'
-          })
-        })
+            'X-Requested-With': 'XMLHttpRequest',
+          }),
+        });
       })
     );
   }
@@ -86,9 +86,9 @@ export class AuthService {
         return this.http.post('//localhost:8000/login', props, {
           withCredentials: true,
           headers: new HttpHeaders({
-            'X-Requested-With': 'XMLHttpRequest'
-          })
-        })
+            'X-Requested-With': 'XMLHttpRequest',
+          }),
+        });
       })
     );
   }
@@ -99,8 +99,8 @@ export class AuthService {
         return this.http.post('//localhost:8000/register', props, {
           withCredentials: true,
           headers: new HttpHeaders({
-            'X-Requested-With': 'XMLHttpRequest'
-          })
+            'X-Requested-With': 'XMLHttpRequest',
+          }),
         });
       })
     );

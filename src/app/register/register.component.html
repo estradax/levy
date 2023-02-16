@@ -1,17 +1,30 @@
 <div class="container mt-5">
   <div class="row d-flex justify-content-center">
     <div class="col-md-6">
-      <form [formGroup]="form" (ngSubmit)="submit()" class="card px-5 py-5" id="form1">
-        <div class="forms-inputs mb-4"><span>Name</span> <input formControlName="name" autocomplete="off" type="text">
+      <form
+        [formGroup]="form"
+        (ngSubmit)="submit()"
+        class="card px-5 py-5"
+        id="form1"
+      >
+        <div class="forms-inputs mb-4">
+          <span>Name</span>
+          <input formControlName="name" autocomplete="off" type="text" />
           <div class="invalid-feedback">A valid email is required!</div>
         </div>
-        <div class="forms-inputs mb-4"><span>Email</span> <input formControlName="email" autocomplete="off" type="text">
+        <div class="forms-inputs mb-4">
+          <span>Email</span>
+          <input formControlName="email" autocomplete="off" type="text" />
           <div class="invalid-feedback">A valid email is required!</div>
         </div>
-        <div class="forms-inputs mb-4"><span>Password</span> <input formControlName="password" type="password">
+        <div class="forms-inputs mb-4">
+          <span>Password</span>
+          <input formControlName="password" type="password" />
           <div class="invalid-feedback">Password must be 8 character!</div>
         </div>
-        <div class="forms-inputs mb-4"><span>Password confirmation</span> <input formControlName="password_confirmation" type="password">
+        <div class="forms-inputs mb-4">
+          <span>Password confirmation</span>
+          <input formControlName="password_confirmation" type="password" />
           <div class="invalid-feedback">Password must be 8 character!</div>
         </div>
         <div class="mb-3">
@@ -21,4 +34,3 @@
     </div>
   </div>
 </div>
-

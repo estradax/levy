@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService, UserInfo} from "../auth/auth.service";
-import {Observable} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import { AuthService, UserInfo } from '../auth/auth.service';
+import { Observable } from 'rxjs';
 
 const months = [
   'Jan',
@@ -13,13 +13,13 @@ const months = [
   'Sept',
   'Oct',
   'Nov',
-  'Dec'
-]
+  'Dec',
+];
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
   isAuthenticated$: Observable<boolean>;

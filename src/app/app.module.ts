@@ -5,9 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
-import {DashboardComponent} from "./dashboard/dashboard.component";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @NgModule({
@@ -16,7 +16,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    EditProfileComponent
+    EditProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,9 +24,9 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     HttpClientXsrfModule.withOptions(),
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
