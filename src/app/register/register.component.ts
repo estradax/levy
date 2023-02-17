@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,22 +11,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent {
-  form: FormGroup;
+  registerForm = this.fb.nonNullable.group({
+    name: ['', [Validators.required]],
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
+    password_confirmation: ['', [Validators.required]],
+  });
   constructor(
     private auth: AuthService,
     private fb: FormBuilder,
     private router: Router
-  ) {
-    this.form = fb.group({
-      name: [''],
-      email: [''],
-      password: [''],
-      password_confirmation: [''],
-    });
-  }
+  ) {}
 
-  submit() {
-    this.auth.register(this.form.value).subscribe(() => {
+  registerFormSubmit() {
+    this.auth.register(this.registerForm.getRawValue()).subscribe(() => {
       this.router.navigate(['']).catch((err) => console.log(err));
     });
   }
