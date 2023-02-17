@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, of, switchMap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 interface RegisterForm {
   name: string;
@@ -32,11 +33,11 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   userInfo() {
-    return this.http.get<UserInfo>('//localhost:8000/api/user');
+    return this.http.get<UserInfo>(`${environment.apiHostUrl}/api/user`);
   }
 
   isAuthenticated() {
-    return this.http.get('//localhost:8000/api/user').pipe(
+    return this.http.get(`${environment.apiHostUrl}/api/user`).pipe(
       map(() => true),
       catchError(() => {
         return of(false);
@@ -45,13 +46,13 @@ export class AuthService {
   }
 
   csrf() {
-    return this.http.get('//localhost:8000/sanctum/csrf-cookie');
+    return this.http.get(`${environment.apiHostUrl}/sanctum/csrf-cookie`);
   }
 
   editProfile(props: EditProfileForm) {
     return this.csrf().pipe(
       switchMap(() => {
-        return this.http.put('//localhost:8000/update-profile', props);
+        return this.http.put(`${environment.apiHostUrl}/update-profile`, props);
       })
     );
   }
@@ -59,7 +60,7 @@ export class AuthService {
   login(props: LoginForm) {
     return this.csrf().pipe(
       switchMap(() => {
-        return this.http.post('//localhost:8000/login', props);
+        return this.http.post(`${environment.apiHostUrl}/login`, props);
       })
     );
   }
@@ -67,7 +68,7 @@ export class AuthService {
   register(props: RegisterForm) {
     return this.csrf().pipe(
       switchMap(() => {
-        return this.http.post('//localhost:8000/register', props);
+        return this.http.post(`${environment.apiHostUrl}/register`, props);
       })
     );
   }
