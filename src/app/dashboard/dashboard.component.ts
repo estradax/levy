@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService, UserInfo } from '../auth/auth.service';
+import { Component } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { tap } from 'rxjs';
 
 const months = [
   'Jan',
@@ -18,23 +20,19 @@ const months = [
 @Component({
   selector: 'app-dashboard',
   standalone: true,
+  imports: [AsyncPipe, NgIf],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit {
-  userInfo: UserInfo | null;
-
-  constructor(private authService: AuthService) {
-    this.userInfo = null;
-  }
-
-  ngOnInit() {
-    this.authService.userInfo$.subscribe((data) => {
-      const createdAtAsDate = new Date(Date.parse(data.created_at));
+export class DashboardComponent {
+  userInfo$ = this.authService.userInfo$.pipe(
+    tap((userInfo) => {
+      const createdAtAsDate = new Date(Date.parse(userInfo.created_at));
       const year = createdAtAsDate.getFullYear();
       const month = months[createdAtAsDate.getMonth()];
-      data.created_at = `${month}, ${year}`;
-      this.userInfo = data;
-    });
-  }
+      userInfo.created_at = `${month}, ${year}`;
+    })
+  );
+
+  constructor(private authService: AuthService) {}
 }
