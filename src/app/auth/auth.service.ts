@@ -30,27 +30,23 @@ export interface UserInfo {
 
 @Injectable()
 export class AuthService {
+  isAuthenticated$ = this.http.get(`${environment.apiHostUrl}/api/user`).pipe(
+    map(() => true),
+    catchError(() => {
+      return of(false);
+    })
+  );
+
+  userInfo$ = this.http.get<UserInfo>(`${environment.apiHostUrl}/api/user`);
+
+  private csrf$ = this.http.get(
+    `${environment.apiHostUrl}/sanctum/csrf-cookie`
+  );
+
   constructor(private http: HttpClient) {}
 
-  userInfo() {
-    return this.http.get<UserInfo>(`${environment.apiHostUrl}/api/user`);
-  }
-
-  isAuthenticated() {
-    return this.http.get(`${environment.apiHostUrl}/api/user`).pipe(
-      map(() => true),
-      catchError(() => {
-        return of(false);
-      })
-    );
-  }
-
-  csrf() {
-    return this.http.get(`${environment.apiHostUrl}/sanctum/csrf-cookie`);
-  }
-
   editProfile(props: EditProfileForm) {
-    return this.csrf().pipe(
+    return this.csrf$.pipe(
       switchMap(() => {
         return this.http.put(`${environment.apiHostUrl}/update-profile`, props);
       })
@@ -58,7 +54,7 @@ export class AuthService {
   }
 
   login(props: LoginForm) {
-    return this.csrf().pipe(
+    return this.csrf$.pipe(
       switchMap(() => {
         return this.http.post(`${environment.apiHostUrl}/login`, props);
       })
@@ -66,7 +62,7 @@ export class AuthService {
   }
 
   register(props: RegisterForm) {
-    return this.csrf().pipe(
+    return this.csrf$.pipe(
       switchMap(() => {
         return this.http.post(`${environment.apiHostUrl}/register`, props);
       })

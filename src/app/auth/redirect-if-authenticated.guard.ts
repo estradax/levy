@@ -7,7 +7,7 @@ import { map } from 'rxjs';
 export class RedirectIfAuthenticatedGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
   canActivate() {
-    return this.authService.isAuthenticated().pipe(
+    return this.authService.isAuthenticated$.pipe(
       map((isAuthenticated) => {
         if (isAuthenticated) {
           this.router.navigate(['']).catch((err) => console.log(err));

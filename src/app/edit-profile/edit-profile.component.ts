@@ -20,7 +20,7 @@ export class EditProfileComponent implements OnInit {
     this.userInfo = null;
   }
   ngOnInit(): void {
-    this.authService.userInfo().subscribe((user) => {
+    this.authService.userInfo$.subscribe((user) => {
       this.form.controls['name'].setValue(user.name);
       this.userInfo = user;
     });

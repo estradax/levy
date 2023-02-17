@@ -8,7 +8,7 @@ export class RedirectIfGuestGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate() {
-    return this.authService.isAuthenticated().pipe(
+    return this.authService.isAuthenticated$.pipe(
       map((isAuthenticated) => {
         if (!isAuthenticated) {
           this.router.navigate(['login']).catch((err) => console.log(err));
