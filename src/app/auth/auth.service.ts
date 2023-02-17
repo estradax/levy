@@ -28,7 +28,9 @@ export interface UserInfo {
   created_at: string;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
   isAuthenticated$ = this.http.get(`${environment.apiHostUrl}/api/user`).pipe(
     map(() => true),
