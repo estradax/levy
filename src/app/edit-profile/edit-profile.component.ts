@@ -1,33 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService, UserInfo } from '../auth/auth.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { tap } from 'rxjs';
+import { AsyncPipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, AsyncPipe, NgIf],
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css'],
 })
-export class EditProfileComponent implements OnInit {
-  form: FormGroup;
-  userInfo: UserInfo | null;
+export class EditProfileComponent {
+  editForm = this.fb.nonNullable.group({
+    name: ['', [Validators.required]],
+  });
+  userInfo$ = this.authService.userInfo$.pipe(
+    tap((userInfo) => {
+      this.editForm.controls['name'].setValue(userInfo.name);
+    })
+  );
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {
-    this.form = fb.group({
-      name: [''],
-    });
-    this.userInfo = null;
-  }
-  ngOnInit(): void {
-    this.authService.userInfo$.subscribe((user) => {
-      this.form.controls['name'].setValue(user.name);
-      this.userInfo = user;
-    });
-  }
+  constructor(private authService: AuthService, private fb: FormBuilder) {}
 
-  submit() {
-    this.authService.editProfile(this.form.value).subscribe(() => {
+  editFormSubmit() {
+    this.authService.editProfile(this.editForm.getRawValue()).subscribe(() => {
       // Do something when edit profile success.
     });
   }
