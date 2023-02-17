@@ -1,29 +1,63 @@
-import { Routes } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { RedirectIfGuestGuard } from './auth/redirect-if-guest.guard';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { LoginComponent } from './login/login.component';
-import { RedirectIfAuthenticatedGuard } from './auth/redirect-if-authenticated.guard';
 import { RegisterComponent } from './register/register.component';
+import { inject } from '@angular/core';
+import { AuthService } from './auth/auth.service';
+import { map } from 'rxjs';
 
 export const APP_ROUTES: Routes = [
   {
     path: '',
-    component: DashboardComponent,
-    canActivate: [RedirectIfGuestGuard],
+    canActivateChild: [
+      () => {
+        const router = inject(Router);
+        return inject(AuthService).isAuthenticated$.pipe(
+          map((isAuthenticated) => {
+            if (!isAuthenticated) {
+              return router.createUrlTree(['login']);
+            }
+            return true;
+          })
+        );
+      },
+    ],
+    children: [
+      {
+        path: '',
+        component: DashboardComponent,
+      },
+      {
+        path: 'edit-profile',
+        component: EditProfileComponent,
+      },
+    ],
   },
   {
-    path: 'edit-profile',
-    component: EditProfileComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [RedirectIfAuthenticatedGuard],
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
-    canActivate: [RedirectIfAuthenticatedGuard],
+    path: '',
+    canActivateChild: [
+      () => {
+        const router = inject(Router);
+        return inject(AuthService).isAuthenticated$.pipe(
+          map((isAuthenticated) => {
+            if (isAuthenticated) {
+              return router.createUrlTree(['']);
+            }
+            return true;
+          })
+        );
+      },
+    ],
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent,
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+      },
+    ],
   },
 ];
