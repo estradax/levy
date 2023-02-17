@@ -27,9 +27,7 @@ export interface UserInfo {
   created_at: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AuthService {
   constructor(private http: HttpClient) {}
 

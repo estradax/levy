@@ -3,9 +3,7 @@ import { CanActivate, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { map } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class RedirectIfGuestGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
