@@ -4,7 +4,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { inject } from '@angular/core';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from './lib/auth/auth.service';
 import { map } from 'rxjs';
 
 export const APP_ROUTES: Routes = [

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../lib/auth/auth.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { tap } from 'rxjs';
 
