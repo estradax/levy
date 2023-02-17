@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService, UserInfo } from '../auth/auth.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-edit-profile',
+  standalone: true,
+  imports: [ReactiveFormsModule],
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css'],
 })
