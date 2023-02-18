@@ -3,11 +3,13 @@ import { AuthService } from '../lib/auth/auth.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { tap } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
+import { EditProfileService } from './edit-profile.service';
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
   imports: [ReactiveFormsModule, AsyncPipe, NgIf],
+  providers: [EditProfileService],
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css'],
 })
@@ -21,10 +23,14 @@ export class EditProfileComponent {
     })
   );
 
-  constructor(private authService: AuthService, private fb: FormBuilder) {}
+  constructor(
+    private authService: AuthService,
+    private editProfile: EditProfileService,
+    private fb: FormBuilder
+  ) {}
 
   editFormSubmit() {
-    this.authService.editProfile(this.editForm.getRawValue()).subscribe(() => {
+    this.editProfile.edit(this.editForm.getRawValue()).subscribe(() => {
       // Do something when edit profile success.
     });
   }

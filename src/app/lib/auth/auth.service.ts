@@ -15,10 +15,6 @@ interface LoginForm {
   password: string;
 }
 
-interface EditProfileForm {
-  name: string;
-}
-
 export interface UserInfo {
   id: number;
   name: string;
@@ -41,19 +37,9 @@ export class AuthService {
 
   userInfo$ = this.http.get<UserInfo>(`${environment.apiHostUrl}/api/user`);
 
-  private csrf$ = this.http.get(
-    `${environment.apiHostUrl}/sanctum/csrf-cookie`
-  );
+  csrf$ = this.http.get(`${environment.apiHostUrl}/sanctum/csrf-cookie`);
 
   constructor(private http: HttpClient) {}
-
-  editProfile(props: EditProfileForm) {
-    return this.csrf$.pipe(
-      switchMap(() => {
-        return this.http.put(`${environment.apiHostUrl}/update-profile`, props);
-      })
-    );
-  }
 
   login(props: LoginForm) {
     return this.csrf$.pipe(
