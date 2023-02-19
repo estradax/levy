@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../lib/auth/auth.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { tap } from 'rxjs';
+import {Router} from "@angular/router";
 
 const months = [
   'Jan',
@@ -34,5 +35,11 @@ export class DashboardComponent {
     })
   );
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
+
+  logout() {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['login']).catch((err) => console.error(err));
+    });
+  }
 }

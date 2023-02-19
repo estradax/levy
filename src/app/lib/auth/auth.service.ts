@@ -56,4 +56,12 @@ export class AuthService {
       })
     );
   }
+
+  logout() {
+    return this.csrf$.pipe(
+      switchMap(() => {
+        return this.http.post(`${environment.apiHostUrl}/logout`, {});
+      })
+    )
+  }
 }
