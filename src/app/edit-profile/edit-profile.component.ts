@@ -34,4 +34,10 @@ export class EditProfileComponent {
       // Do something when edit profile success.
     });
   }
+
+  verifyEmail() {
+    this.profileService.verifyEmail().subscribe(() => {
+      // Do something when email is verified
+    });
+  }
 }

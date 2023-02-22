@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../lib/auth/auth.service';
-import { switchMap } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 interface EditProfileForm {
@@ -16,6 +16,20 @@ export class ProfileService {
     return this.authService.csrf$.pipe(
       switchMap(() => {
         return this.http.put(`${environment.apiHostUrl}/profile/update`, form);
+      })
+    );
+  }
+
+  verifyEmail() {
+    return this.authService.csrf$.pipe(
+      switchMap(() => {
+        return this.http
+          .post(`${environment.apiHostUrl}/email/verification-notification`, {})
+          .pipe(
+            catchError((err) => {
+              return throwError(() => err);
+            })
+          );
       })
     );
   }

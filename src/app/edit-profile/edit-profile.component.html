@@ -10,6 +10,15 @@
         <span class="text-black-50">{{ userInfo.email }}</span
         ><span> </span>
       </div>
+      <div class="mt-5 text-center">
+        <button
+          type="button"
+          (click)="verifyEmail()"
+          class="btn btn-primary profile-button"
+        >
+          Verify Email
+        </button>
+      </div>
     </div>
     <div class="col-md-5 border-right">
       <form [formGroup]="editForm" (ngSubmit)="editFormSubmit()">
