@@ -62,6 +62,6 @@ export class AuthService {
       switchMap(() => {
         return this.http.post(`${environment.apiHostUrl}/logout`, {});
       })
-    )
+    );
   }
 }
