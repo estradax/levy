@@ -9,7 +9,7 @@ interface EditProfileForm {
 }
 
 @Injectable()
-export class EditProfileService {
+export class ProfileService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   edit(form: EditProfileForm) {
