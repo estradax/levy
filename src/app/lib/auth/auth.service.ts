@@ -24,6 +24,13 @@ export interface UserInfo {
   created_at: string;
 }
 
+interface PasswordResetForm {
+  token: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -61,6 +68,14 @@ export class AuthService {
     return this.csrf$.pipe(
       switchMap(() => {
         return this.http.post(`${environment.apiHostUrl}/logout`, {});
+      })
+    );
+  }
+
+  passwordReset(form: PasswordResetForm) {
+    return this.csrf$.pipe(
+      switchMap(() => {
+        return this.http.post(`${environment.apiHostUrl}/reset-password`, form);
       })
     );
   }
