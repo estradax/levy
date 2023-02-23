@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../lib/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PasswordService } from '../lib/password/password.service';
 
 @Component({
   selector: 'app-password-reset',
   standalone: true,
   imports: [ReactiveFormsModule],
+  providers: [PasswordService],
   templateUrl: './password-reset.component.html',
   styleUrls: ['./password-reset.component.css'],
 })
@@ -19,7 +20,7 @@ export class PasswordResetComponent {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private authService: AuthService,
+    private passwordService: PasswordService,
     private router: Router
   ) {}
 
@@ -27,8 +28,8 @@ export class PasswordResetComponent {
     const token = this.route.snapshot.paramMap.get('token')!;
     const email = this.route.snapshot.queryParamMap.get('email')!;
 
-    this.authService
-      .passwordReset({
+    this.passwordService
+      .reset({
         token,
         email,
         password: this.passwordResetForm.get('password')!.value,

@@ -5,13 +5,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../lib/auth/auth.service';
+import { PasswordService } from '../lib/password/password.service';
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  templateUrl: './forgot-password.component.html',
   imports: [ReactiveFormsModule, FormsModule],
+  providers: [PasswordService],
+  templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css'],
 })
 export class ForgotPasswordComponent {
@@ -20,11 +21,11 @@ export class ForgotPasswordComponent {
     validators: [Validators.required],
   });
 
-  constructor(private authService: AuthService) {}
+  constructor(private passwordService: PasswordService) {}
 
   forgotPasswordSubmit() {
-    this.authService
-      .sendPasswordResetLink(this.emailControl.getRawValue())
+    this.passwordService
+      .sendResetLink(this.emailControl.getRawValue())
       .subscribe(() => {
         // Do something
       });
