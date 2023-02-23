@@ -72,6 +72,16 @@ export class AuthService {
     );
   }
 
+  sendPasswordResetLink(email: string) {
+    return this.csrf$.pipe(
+      switchMap(() => {
+        return this.http.post(`${environment.apiHostUrl}/forgot-password`, {
+          email,
+        });
+      })
+    );
+  }
+
   passwordReset(form: PasswordResetForm) {
     return this.csrf$.pipe(
       switchMap(() => {

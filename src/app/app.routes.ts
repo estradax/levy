@@ -7,6 +7,7 @@ import { inject } from '@angular/core';
 import { AuthService } from './lib/auth/auth.service';
 import { map } from 'rxjs';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 export const APP_ROUTES: Routes = [
   {
@@ -64,5 +65,9 @@ export const APP_ROUTES: Routes = [
   {
     path: 'password-reset/:token',
     component: PasswordResetComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
   },
 ];
