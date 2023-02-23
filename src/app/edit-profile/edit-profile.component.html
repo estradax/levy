@@ -29,14 +29,10 @@
           </div>
           <div class="row mt-3">
             <div class="col-md-12">
-              <label class="labels">Email</label>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Email"
-                [value]="userInfo.email"
-                disabled
-              />
+              <div class="forms-inputs mt-4">
+                <span>Email</span>
+                <input disabled [value]="userInfo.email" type="text" />
+              </div>
               <small *ngIf="userInfo.email_verified_at; else emailIsNotVerified"
                 >Email is verified</small
               >
@@ -45,13 +41,10 @@
               >
             </div>
             <div class="col-md-12">
-              <label class="labels">Name</label
-              ><input
-                type="text"
-                class="form-control"
-                placeholder="Name"
-                formControlName="name"
-              />
+              <div class="forms-inputs mt-4">
+                <span>Name</span>
+                <input formControlName="name" type="text" />
+              </div>
             </div>
           </div>
           <div class="mt-5 text-center">
