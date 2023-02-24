@@ -5,15 +5,13 @@
   transition: all 0.5s;
 }
 
-.image img {
-  transition: all 0.5s;
-  border-radius: 50%;
+.icon {
+  width: 26px;
+  height: 26px;
 }
 
-.btn {
-  height: 140px;
-  width: 140px;
-  border-radius: 50%
+.image img {
+  border-radius: 50%;
 }
 
 .name {
