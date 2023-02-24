@@ -33,11 +33,11 @@
                 <span>Email</span>
                 <input disabled [value]="userInfo.email" type="text" />
               </div>
-              <small *ngIf="userInfo.email_verified_at; else emailIsNotVerified"
-                >Email is verified</small
-              >
+              <p *ngIf="userInfo.email_verified_at; else emailIsNotVerified"><small>This email is verified.</small></p>
               <ng-template #emailIsNotVerified
-                >Email is not verified</ng-template
+                >
+                <p><small>This email is not verified</small></p>
+              </ng-template
               >
             </div>
             <div class="col-md-12">
