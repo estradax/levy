@@ -10,25 +10,56 @@
         <div class="forms-inputs mb-4">
           <span>Name</span>
           <input formControlName="name" autocomplete="off" type="text" />
-          <div class="invalid-feedback">A valid email is required!</div>
+          <p
+            *ngIf="
+              registerForm.controls.name.invalid &&
+              registerForm.controls.name.touched
+            "
+            class="text-danger"
+          >
+            <small>Name is required</small>
+          </p>
         </div>
         <div class="forms-inputs mb-4">
           <span>Email</span>
           <input formControlName="email" autocomplete="off" type="text" />
-          <div class="invalid-feedback">A valid email is required!</div>
+          <p
+            *ngIf="
+              registerForm.controls.email.invalid &&
+              registerForm.controls.email.touched
+            "
+            class="text-danger"
+          >
+            <small>Email is invalid</small>
+          </p>
         </div>
         <div class="forms-inputs mb-4">
           <span>Password</span>
           <input formControlName="password" type="password" />
-          <div class="invalid-feedback">Password must be 8 character!</div>
+          <p
+            *ngIf="
+              registerForm.controls.password.invalid &&
+              registerForm.controls.password.touched
+            "
+            class="text-danger"
+          >
+            <small>Password is invalid</small>
+          </p>
         </div>
         <div class="forms-inputs mb-4">
           <span>Password confirmation</span>
           <input formControlName="password_confirmation" type="password" />
-          <div class="invalid-feedback">Password must be 8 character!</div>
+          <p
+            *ngIf="registerForm.errors?.['notMatch'] && registerForm.controls.password_confirmation.touched"
+            class="text-danger"
+          >
+            <small>Password is not match</small>
+          </p>
         </div>
         <div class="mb-3">
-          <button class="btn btn-dark w-100">Register</button>
+          <button [disabled]="registerForm.invalid" class="btn btn-dark w-100">
+            Register
+          </button>
         </div>
       </form>
     </div>
