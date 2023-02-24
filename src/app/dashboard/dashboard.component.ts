@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../lib/auth/auth.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { tap } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 const months = [
   'Jan',
@@ -21,7 +21,7 @@ const months = [
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [AsyncPipe, NgIf],
+  imports: [AsyncPipe, NgIf, RouterLink],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })

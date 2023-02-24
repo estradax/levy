@@ -12,11 +12,7 @@
       </div>
 
       <div *ngIf="userInfo.email_verified_at === null" class="text-center">
-        <button
-          type="button"
-          (click)="verifyEmail()"
-          class="btn btn-dark"
-        >
+        <button type="button" (click)="verifyEmail()" class="btn btn-dark">
           Verify Email
         </button>
       </div>
@@ -33,12 +29,12 @@
                 <span>Email</span>
                 <input disabled [value]="userInfo.email" type="text" />
               </div>
-              <p *ngIf="userInfo.email_verified_at; else emailIsNotVerified"><small>This email is verified.</small></p>
-              <ng-template #emailIsNotVerified
-                >
+              <p *ngIf="userInfo.email_verified_at; else emailIsNotVerified">
+                <small>This email is verified.</small>
+              </p>
+              <ng-template #emailIsNotVerified>
                 <p><small>This email is not verified</small></p>
-              </ng-template
-              >
+              </ng-template>
             </div>
             <div class="col-md-12">
               <div class="forms-inputs mt-4">
