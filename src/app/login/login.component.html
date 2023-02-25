@@ -7,7 +7,7 @@
             <h3 class="mb-4 text-center">Login</h3>
             <div class="forms-inputs mb-4">
               <span>Email</span>
-              <input formControlName="email" autocomplete="off" type="text" />
+              <input formControlName="email" autocomplete="off" type="email" />
               <p
                 *ngIf="
                   loginForm.controls.email.invalid &&
@@ -15,7 +15,12 @@
                 "
                 class="text-danger"
               >
-                <small>Email is invalid</small>
+                <small *ngIf="loginForm.controls.email.errors?.['required']"
+                  >Email is required</small
+                >
+                <small *ngIf="loginForm.controls.email.errors?.['email']"
+                  >Email is invalid</small
+                >
               </p>
             </div>
             <div class="forms-inputs mb-4">
@@ -28,7 +33,9 @@
                 "
                 class="text-danger"
               >
-                <small>Password is invalid</small>
+                <small *ngIf="loginForm.controls.password.errors?.['required']"
+                  >Password is required</small
+                >
               </p>
             </div>
             <a routerLink="/forgot-password"
