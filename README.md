@@ -1,27 +1,35 @@
 # Levy
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.4.
+---
 
-## Development server
+This is not a standalone application. What is that mean? it's mean this app is depends on another app. Which depends on Blankenship app. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Features
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Mostly authentication and profile features.
 
-## Build
+- Login / Register
+- Forgot Password
+- Profile Info
+- Update Profile
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+## Run
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+---
 
-## Running end-to-end tests
+1. First of all you need to clone the Blankenship app, and run it usually on port 8000.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. Second clone this app.
 
-## Further help
+3. After that to install dependencies run
+```shell
+npm install
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+4. Next run this command to start
+```shell
+npm start -- --port 3000
+```
