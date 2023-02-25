@@ -40,11 +40,29 @@
               <div class="forms-inputs mt-4">
                 <span>Name</span>
                 <input formControlName="name" type="text" />
+                <p
+                  class="text-danger"
+                  *ngIf="
+                    editForm.controls.name.invalid ||
+                    editForm.controls.name.touched
+                  "
+                >
+                  <small *ngIf="editForm.controls.name.errors?.['required']"
+                    >Name is required</small
+                  >
+                </p>
               </div>
             </div>
           </div>
           <div class="mt-5 text-center">
-            <button class="btn btn-dark">Save Profile</button>
+            <button
+              [disabled]="
+                editForm.invalid || editForm.pristine || editForm.untouched
+              "
+              class="btn btn-dark"
+            >
+              Save Profile
+            </button>
           </div>
         </div>
       </form>
