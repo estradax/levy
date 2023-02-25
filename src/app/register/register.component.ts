@@ -10,7 +10,9 @@ import {
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 
-const passwordMatchingValidator: ValidatorFn = (control: AbstractControl) => {
+export const passwordMatchingValidator: ValidatorFn = (
+  control: AbstractControl
+) => {
   const password = control.get('password')!;
   const passwordConfirmation = control.get('password_confirmation')!;
   return password.value === passwordConfirmation.value
