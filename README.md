@@ -1,12 +1,8 @@
 # Levy
 
----
-
 This is not a standalone application. What is that mean? it's mean this app is depends on another app. Which depends on Blankenship app. 
 
 ## Features
-
----
 
 Mostly authentication and profile features.
 
@@ -17,8 +13,6 @@ Mostly authentication and profile features.
 
 
 ## Run
-
----
 
 1. First of all you need to clone the Blankenship app, and run it usually on port 8000.
 
