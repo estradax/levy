@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { PasswordService } from '../lib/password/password.service';
-import {NgIf} from "@angular/common";
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-forgot-password',
