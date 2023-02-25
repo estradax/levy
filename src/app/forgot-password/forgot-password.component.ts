@@ -6,11 +6,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { PasswordService } from '../lib/password/password.service';
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, NgIf],
   providers: [PasswordService],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css'],
@@ -18,7 +19,7 @@ import { PasswordService } from '../lib/password/password.service';
 export class ForgotPasswordComponent {
   emailControl = new FormControl('', {
     nonNullable: true,
-    validators: [Validators.required],
+    validators: [Validators.required, Validators.email],
   });
 
   constructor(private passwordService: PasswordService) {}
