@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, of} from "rxjs";
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlertService {
   isOpen$ = new BehaviorSubject(false);
-
-  constructor() { }
 
   open() {
     this.isOpen$.next(true);
