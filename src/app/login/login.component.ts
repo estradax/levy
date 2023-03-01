@@ -19,7 +19,7 @@ export class LoginComponent {
   constructor(
     private auth: AuthService,
     private fb: FormBuilder,
-    private router: Router,
+    private router: Router
   ) {}
 
   loginFormSubmit() {
