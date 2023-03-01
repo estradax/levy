@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, of, switchMap, throwError } from 'rxjs';
+import { catchError, map, of, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AlertService } from '../alert/alert.service';
+import { handleExceptionThrown } from '../utils/utils.service';
 
 interface RegisterForm {
   name: string;
@@ -50,14 +51,9 @@ export class AuthService {
 
   csrf$ = this.http
     .get(`${environment.apiHostUrl}/sanctum/csrf-cookie`)
-    .pipe(catchError(this.handleExceptionThrown));
+    .pipe(catchError(handleExceptionThrown));
 
   constructor(private http: HttpClient, private alertService: AlertService) {}
-
-  private handleExceptionThrown(err: Error) {
-    this.alertService.open();
-    return throwError(() => err);
-  }
 
   private handleApiError() {
     return map((res: ApiResponse) => {
@@ -70,7 +66,7 @@ export class AuthService {
       switchMap(() => {
         return this.http
           .post<ApiResponse>(`${environment.apiHostUrl}/login`, props)
-          .pipe(catchError(this.handleExceptionThrown), this.handleApiError());
+          .pipe(catchError(handleExceptionThrown), this.handleApiError());
       })
     );
   }
@@ -80,7 +76,7 @@ export class AuthService {
       switchMap(() => {
         return this.http
           .post<ApiResponse>(`${environment.apiHostUrl}/register`, props)
-          .pipe(catchError(this.handleExceptionThrown), this.handleApiError());
+          .pipe(catchError(handleExceptionThrown), this.handleApiError());
       })
     );
   }
@@ -90,7 +86,7 @@ export class AuthService {
       switchMap(() => {
         return this.http
           .post(`${environment.apiHostUrl}/logout`, {})
-          .pipe(catchError(this.handleExceptionThrown));
+          .pipe(catchError(handleExceptionThrown));
       })
     );
   }

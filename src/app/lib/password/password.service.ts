@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { switchMap } from 'rxjs';
+import { catchError, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { handleExceptionThrown } from '../utils/utils.service';
 
 interface PasswordResetForm {
   token: string;
@@ -18,9 +19,11 @@ export class PasswordService {
   sendResetLink(email: string) {
     return this.authService.csrf$.pipe(
       switchMap(() => {
-        return this.http.post(`${environment.apiHostUrl}/forgot-password`, {
-          email,
-        });
+        return this.http
+          .post(`${environment.apiHostUrl}/forgot-password`, {
+            email,
+          })
+          .pipe(catchError(handleExceptionThrown));
       })
     );
   }
@@ -28,7 +31,9 @@ export class PasswordService {
   reset(form: PasswordResetForm) {
     return this.authService.csrf$.pipe(
       switchMap(() => {
-        return this.http.post(`${environment.apiHostUrl}/reset-password`, form);
+        return this.http
+          .post(`${environment.apiHostUrl}/reset-password`, form)
+          .pipe(catchError(handleExceptionThrown));
       })
     );
   }
