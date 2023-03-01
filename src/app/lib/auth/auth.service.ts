@@ -48,14 +48,16 @@ export class AuthService {
 
   userInfo$ = this.http.get<UserInfo>(`${environment.apiHostUrl}/api/user`);
 
-  csrf$ = this.http.get(`${environment.apiHostUrl}/sanctum/csrf-cookie`).pipe(
-    catchError((err: Error) => {
-      this.alertService.open();
-      return throwError(() => err);
-    })
-  );
+  csrf$ = this.http
+    .get(`${environment.apiHostUrl}/sanctum/csrf-cookie`)
+    .pipe(catchError(this.handleExceptionThrown));
 
   constructor(private http: HttpClient, private alertService: AlertService) {}
+
+  private handleExceptionThrown(err: Error) {
+    this.alertService.open();
+    return throwError(() => err);
+  }
 
   private handleApiError() {
     return map((res: ApiResponse) => {
@@ -68,7 +70,7 @@ export class AuthService {
       switchMap(() => {
         return this.http
           .post<ApiResponse>(`${environment.apiHostUrl}/login`, props)
-          .pipe(this.handleApiError());
+          .pipe(catchError(this.handleExceptionThrown), this.handleApiError());
       })
     );
   }
@@ -78,7 +80,7 @@ export class AuthService {
       switchMap(() => {
         return this.http
           .post<ApiResponse>(`${environment.apiHostUrl}/register`, props)
-          .pipe(this.handleApiError());
+          .pipe(catchError(this.handleExceptionThrown), this.handleApiError());
       })
     );
   }
@@ -86,7 +88,9 @@ export class AuthService {
   logout() {
     return this.csrf$.pipe(
       switchMap(() => {
-        return this.http.post(`${environment.apiHostUrl}/logout`, {});
+        return this.http
+          .post(`${environment.apiHostUrl}/logout`, {})
+          .pipe(catchError(this.handleExceptionThrown));
       })
     );
   }
