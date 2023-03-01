@@ -57,16 +57,18 @@ export class AuthService {
 
   constructor(private http: HttpClient, private alertService: AlertService) {}
 
+  private handleApiError() {
+    return map((res: ApiResponse) => {
+      if (res.error) throw new Error(res.error.message);
+    });
+  }
+
   login(props: LoginForm) {
     return this.csrf$.pipe(
       switchMap(() => {
         return this.http
           .post<ApiResponse>(`${environment.apiHostUrl}/login`, props)
-          .pipe(
-            map((res) => {
-              if (res.error) throw new Error(res.error.type);
-            })
-          );
+          .pipe(this.handleApiError());
       })
     );
   }
@@ -74,7 +76,9 @@ export class AuthService {
   register(props: RegisterForm) {
     return this.csrf$.pipe(
       switchMap(() => {
-        return this.http.post(`${environment.apiHostUrl}/register`, props);
+        return this.http
+          .post<ApiResponse>(`${environment.apiHostUrl}/register`, props)
+          .pipe(this.handleApiError());
       })
     );
   }
