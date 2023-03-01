@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../lib/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { AlertService } from '../lib/alert/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -19,12 +20,14 @@ export class LoginComponent {
   constructor(
     private auth: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) {}
 
   loginFormSubmit() {
-    this.auth.login(this.loginForm.getRawValue()).subscribe(() => {
-      this.router.navigate(['']).catch((err) => console.log(err));
+    this.auth.login(this.loginForm.getRawValue()).subscribe({
+      error: () => this.alertService.open(),
+      next: () => this.router.navigate(['']).catch((err) => console.error(err)),
     });
   }
 }

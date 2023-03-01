@@ -25,6 +25,16 @@ export interface UserInfo {
   created_at: string;
 }
 
+interface ErrorObject {
+  type: string;
+  message: string;
+}
+
+interface ApiResponse {
+  error: ErrorObject | null;
+  data: object | null;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -50,7 +60,13 @@ export class AuthService {
   login(props: LoginForm) {
     return this.csrf$.pipe(
       switchMap(() => {
-        return this.http.post(`${environment.apiHostUrl}/login`, props);
+        return this.http
+          .post<ApiResponse>(`${environment.apiHostUrl}/login`, props)
+          .pipe(
+            map((res) => {
+              if (res.error) throw new Error(res.error.type);
+            })
+          );
       })
     );
   }
