@@ -19,6 +19,7 @@ export const formatDateToMatchedOurStyle = (date: Date) => {
   const months = [
     'Jan',
     'Feb',
+    'Mar',
     'Apr',
     'May',
     'Jun',
