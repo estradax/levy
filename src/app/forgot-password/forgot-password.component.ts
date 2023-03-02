@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { PasswordService } from '../lib/password/password.service';
 import { NgIf } from '@angular/common';
+import { AlertService } from '../lib/alert/alert.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,13 +23,19 @@ export class ForgotPasswordComponent {
     validators: [Validators.required, Validators.email],
   });
 
-  constructor(private passwordService: PasswordService) {}
+  constructor(
+    private passwordService: PasswordService,
+    private alertService: AlertService
+  ) {}
 
   forgotPasswordSubmit() {
     this.passwordService
       .sendResetLink(this.emailControl.getRawValue())
-      .subscribe(() => {
-        // Do something
+      .subscribe({
+        error: () => this.alertService.open(),
+        next: () => {
+          // Do something
+        },
       });
   }
 }
