@@ -1,9 +1,9 @@
-export interface ErrorObject {
+export type ErrorObject = {
   type: string;
   message: string;
 }
 
-export interface ApiResponse {
+export type ApiResponse = {
   error: ErrorObject | null;
   data: object | null;
 }
