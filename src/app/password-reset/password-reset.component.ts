@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PasswordService } from '../lib/password/password.service';
 import { passwordMatchingValidator } from '../register/register.component';
 import { NgIf } from '@angular/common';
 import { AlertService } from '../lib/alert/alert.service';
+import { combineLatest, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-password-reset',
@@ -14,9 +15,11 @@ import { AlertService } from '../lib/alert/alert.service';
   templateUrl: './password-reset.component.html',
   styleUrls: ['./password-reset.component.css'],
 })
-export class PasswordResetComponent {
+export class PasswordResetComponent implements OnInit {
   passwordResetForm = this.fb.nonNullable.group(
     {
+      token: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       password_confirmation: [''],
     },
@@ -33,25 +36,53 @@ export class PasswordResetComponent {
     private alertService: AlertService
   ) {}
 
-  passwordResetFormSubmit() {
-    const token = this.route.snapshot.paramMap.get('token')!;
-    const email = this.route.snapshot.queryParamMap.get('email')!;
+  ngOnInit() {
+    const emailChanges$ =
+      this.passwordResetForm.controls.email.valueChanges.pipe(
+        tap(() => {
+          if (this.passwordResetForm.controls.email.valid) return;
+          this.alertService.open();
+        })
+      );
 
-    this.passwordService
-      .reset({
-        token,
-        email,
-        password: this.passwordResetForm.get('password')!.value,
-        password_confirmation: this.passwordResetForm.get(
-          'password_confirmation'
-        )!.value,
+    emailChanges$.subscribe();
+
+    const token$ = this.route.paramMap.pipe(
+      map((paramMap) => {
+        if (!paramMap.has('token')) return null;
+        return paramMap.get('token') as string;
       })
-      .subscribe({
-        error: () => this.alertService.open(),
-        next: () =>
-          this.router.navigate(['login']).catch((err) => {
-            console.error(err);
-          }),
-      });
+    );
+
+    const email$ = this.route.queryParamMap.pipe(
+      map((queryParamMap) => {
+        if (!queryParamMap.has('email')) return null;
+        return queryParamMap.get('email') as string;
+      })
+    );
+
+    const patchValue$ = combineLatest([token$, email$]).pipe(
+      tap(([token, email]) => {
+        if (!token || !email) {
+          this.alertService.open();
+          return;
+        }
+
+        this.passwordResetForm.patchValue({
+          token: token as string,
+          email: email as string,
+        });
+      })
+    );
+
+    patchValue$.subscribe();
+  }
+
+  passwordResetFormSubmit() {
+    this.passwordService.reset(this.passwordResetForm.getRawValue()).subscribe({
+      error: () => this.alertService.open(),
+      next: () =>
+        this.router.navigate(['login']).catch((err) => console.error(err)),
+    });
   }
 }
