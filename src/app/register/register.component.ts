@@ -1,25 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../lib/auth/auth.service';
 import { AlertService } from '../lib/alert/alert.service';
-import {
-  AbstractControl,
-  FormBuilder,
-  ReactiveFormsModule,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-
-export const passwordMatchingValidator: ValidatorFn = (
-  control: AbstractControl
-) => {
-  const password = control.get('password')!;
-  const passwordConfirmation = control.get('password_confirmation')!;
-  return password.value === passwordConfirmation.value
-    ? null
-    : { notMatch: true };
-};
+import { passwordConfirmed } from '../lib/password/password.validator';
 
 @Component({
   selector: 'app-register',
@@ -37,7 +22,7 @@ export class RegisterComponent {
       password_confirmation: [''],
     },
     {
-      validators: passwordMatchingValidator,
+      validators: passwordConfirmed,
     }
   );
   constructor(

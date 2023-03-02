@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PasswordService } from '../lib/password/password.service';
-import { passwordMatchingValidator } from '../register/register.component';
 import { NgIf } from '@angular/common';
 import { AlertService } from '../lib/alert/alert.service';
 import { combineLatest, map, tap } from 'rxjs';
+import { passwordConfirmed } from '../lib/password/password.validator';
 
 @Component({
   selector: 'app-password-reset',
@@ -24,7 +24,7 @@ export class PasswordResetComponent implements OnInit {
       password_confirmation: [''],
     },
     {
-      validators: passwordMatchingValidator,
+      validators: passwordConfirmed,
     }
   );
 
