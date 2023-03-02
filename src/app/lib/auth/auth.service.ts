@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { handleExceptionThrown } from '../utils/utils';
+import { handleApiError, handleExceptionThrown } from '../utils/utils';
+import { ApiResponse } from '../api-response.interface';
 
 interface RegisterForm {
   name: string;
@@ -25,16 +26,6 @@ export interface UserInfo {
   created_at: string;
 }
 
-interface ErrorObject {
-  type: string;
-  message: string;
-}
-
-interface ApiResponse {
-  error: ErrorObject | null;
-  data: object | null;
-}
-
 @Injectable({
   providedIn: 'root',
 })
@@ -54,18 +45,12 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  private handleApiError() {
-    return map((res: ApiResponse) => {
-      if (res.error) throw new Error(res.error.message);
-    });
-  }
-
   login(props: LoginForm) {
     return this.csrf$.pipe(
       switchMap(() => {
         return this.http
           .post<ApiResponse>(`${environment.apiHostUrl}/login`, props)
-          .pipe(catchError(handleExceptionThrown), this.handleApiError());
+          .pipe(catchError(handleExceptionThrown), handleApiError());
       })
     );
   }
@@ -75,7 +60,7 @@ export class AuthService {
       switchMap(() => {
         return this.http
           .post<ApiResponse>(`${environment.apiHostUrl}/register`, props)
-          .pipe(catchError(handleExceptionThrown), this.handleApiError());
+          .pipe(catchError(handleExceptionThrown), handleApiError());
       })
     );
   }

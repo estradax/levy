@@ -3,7 +3,8 @@ import { catchError, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { handleExceptionThrown } from '../utils/utils';
+import { handleApiError, handleExceptionThrown } from '../utils/utils';
+import { ApiResponse } from '../api-response.interface';
 
 interface PasswordResetForm {
   token: string;
@@ -20,10 +21,10 @@ export class PasswordService {
     return this.authService.csrf$.pipe(
       switchMap(() => {
         return this.http
-          .post(`${environment.apiHostUrl}/forgot-password`, {
+          .post<ApiResponse>(`${environment.apiHostUrl}/forgot-password`, {
             email,
           })
-          .pipe(catchError(handleExceptionThrown));
+          .pipe(catchError(handleExceptionThrown), handleApiError());
       })
     );
   }
