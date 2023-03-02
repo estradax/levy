@@ -3,7 +3,7 @@ import { catchError, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { handleExceptionThrown } from '../utils/utils.service';
+import { handleExceptionThrown } from '../utils/utils';
 
 interface PasswordResetForm {
   token: string;

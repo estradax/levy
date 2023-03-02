@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AlertService } from '../alert/alert.service';
-import { handleExceptionThrown } from '../utils/utils.service';
+import { handleExceptionThrown } from '../utils/utils';
 
 interface RegisterForm {
   name: string;

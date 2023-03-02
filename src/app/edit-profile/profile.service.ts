@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../lib/auth/auth.service';
 import { catchError, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { handleExceptionThrown } from '../lib/utils/utils.service';
+import { handleExceptionThrown } from '../lib/utils/utils';
 
 interface EditProfileForm {
   name: string;
