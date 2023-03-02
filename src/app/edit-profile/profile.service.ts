@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../lib/auth/auth.service';
 import { catchError, switchMap } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { handleExceptionThrown } from '../lib/utils/utils';
+import { handleApiError, handleExceptionThrown } from '../lib/utils/utils';
+import { ApiResponse } from '../lib/api-response.interface';
 
 interface EditProfileForm {
   name: string;
@@ -17,8 +18,8 @@ export class ProfileService {
     return this.authService.csrf$.pipe(
       switchMap(() => {
         return this.http
-          .put(`${environment.apiHostUrl}/profile/update`, form)
-          .pipe(catchError(handleExceptionThrown));
+          .put<ApiResponse>(`${environment.apiHostUrl}/profile/update`, form)
+          .pipe(catchError(handleExceptionThrown), handleApiError());
       })
     );
   }

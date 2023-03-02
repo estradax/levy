@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { tap } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { ProfileService } from './profile.service';
+import { AlertService } from '../lib/alert/alert.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -26,12 +27,16 @@ export class EditProfileComponent {
   constructor(
     private authService: AuthService,
     private profileService: ProfileService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private alertService: AlertService
   ) {}
 
   editFormSubmit() {
-    this.profileService.edit(this.editForm.getRawValue()).subscribe(() => {
-      // Do something when edit profile success.
+    this.profileService.edit(this.editForm.getRawValue()).subscribe({
+      error: () => this.alertService.open(),
+      next: () => {
+        // Do something when edit profile success.
+      },
     });
   }
 
