@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PasswordService } from '../lib/password/password.service';
 import { passwordMatchingValidator } from '../register/register.component';
 import { NgIf } from '@angular/common';
+import { AlertService } from '../lib/alert/alert.service';
 
 @Component({
   selector: 'app-password-reset',
@@ -28,7 +29,8 @@ export class PasswordResetComponent {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private passwordService: PasswordService,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) {}
 
   passwordResetFormSubmit() {
@@ -44,10 +46,12 @@ export class PasswordResetComponent {
           'password_confirmation'
         )!.value,
       })
-      .subscribe(() => {
-        this.router.navigate(['login']).catch((err) => {
-          console.error(err);
-        });
+      .subscribe({
+        error: () => this.alertService.open(),
+        next: () =>
+          this.router.navigate(['login']).catch((err) => {
+            console.error(err);
+          }),
       });
   }
 }

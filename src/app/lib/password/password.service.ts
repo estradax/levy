@@ -33,8 +33,8 @@ export class PasswordService {
     return this.authService.csrf$.pipe(
       switchMap(() => {
         return this.http
-          .post(`${environment.apiHostUrl}/reset-password`, form)
-          .pipe(catchError(handleExceptionThrown));
+          .post<ApiResponse>(`${environment.apiHostUrl}/reset-password`, form)
+          .pipe(catchError(handleExceptionThrown), handleApiError());
       })
     );
   }
