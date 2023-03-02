@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { AlertService } from '../alert/alert.service';
 import { handleExceptionThrown } from '../utils/utils';
 
 interface RegisterForm {
@@ -53,7 +52,7 @@ export class AuthService {
     .get(`${environment.apiHostUrl}/sanctum/csrf-cookie`)
     .pipe(catchError(handleExceptionThrown));
 
-  constructor(private http: HttpClient, private alertService: AlertService) {}
+  constructor(private http: HttpClient) {}
 
   private handleApiError() {
     return map((res: ApiResponse) => {
