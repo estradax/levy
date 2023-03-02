@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../lib/auth/auth.service';
+import { AlertService } from '../lib/alert/alert.service';
 import {
   AbstractControl,
   FormBuilder,
@@ -42,12 +43,14 @@ export class RegisterComponent {
   constructor(
     private auth: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private alertService: AlertService
   ) {}
 
   registerFormSubmit() {
-    this.auth.register(this.registerForm.getRawValue()).subscribe(() => {
-      this.router.navigate(['']).catch((err) => console.log(err));
+    this.auth.register(this.registerForm.getRawValue()).subscribe({
+      error: () => this.alertService.open(),
+      next: () => this.router.navigate(['']).catch((err) => console.log(err)),
     });
   }
 }
