@@ -4,7 +4,7 @@ import { AlertService } from '../lib/alert/alert.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
-import { passwordConfirmed } from '../lib/password/password.validator';
+import { confirmed } from '../lib/password/password.validator';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +22,7 @@ export class RegisterComponent {
       password_confirmation: [''],
     },
     {
-      validators: passwordConfirmed,
+      validators: confirmed,
     }
   );
   constructor(

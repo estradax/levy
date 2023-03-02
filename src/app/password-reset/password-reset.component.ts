@@ -5,7 +5,7 @@ import { PasswordService } from '../lib/password/password.service';
 import { NgIf } from '@angular/common';
 import { AlertService } from '../lib/alert/alert.service';
 import { combineLatest, map, tap } from 'rxjs';
-import { passwordConfirmed } from '../lib/password/password.validator';
+import { confirmed } from '../lib/password/password.validator';
 
 @Component({
   selector: 'app-password-reset',
@@ -24,7 +24,7 @@ export class PasswordResetComponent implements OnInit {
       password_confirmation: [''],
     },
     {
-      validators: passwordConfirmed,
+      validators: confirmed,
     }
   );
 
