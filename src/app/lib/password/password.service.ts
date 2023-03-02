@@ -5,13 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { handleApiError, handleExceptionThrown } from '../utils/utils';
 import { ApiResponse } from '../api-response.interface';
-
-interface PasswordResetForm {
-  token: string;
-  email: string;
-  password: string;
-  password_confirmation: string;
-}
+import { PasswordReset } from './password.type';
 
 @Injectable()
 export class PasswordService {
@@ -29,11 +23,11 @@ export class PasswordService {
     );
   }
 
-  reset(form: PasswordResetForm) {
+  reset(data: PasswordReset) {
     return this.authService.csrf$.pipe(
       switchMap(() => {
         return this.http
-          .post<ApiResponse>(`${environment.apiHostUrl}/reset-password`, form)
+          .post<ApiResponse>(`${environment.apiHostUrl}/reset-password`, data)
           .pipe(catchError(handleExceptionThrown), handleApiError());
       })
     );
