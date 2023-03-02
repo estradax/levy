@@ -14,3 +14,22 @@ export const handleApiError = () => {
     if (res.error) throw new Error(res.error.message);
   });
 };
+
+export const formatDateToMatchedOurStyle = (date: Date) => {
+  const months = [
+    'Jan',
+    'Feb',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sept',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  const year = date.getFullYear();
+  const month = months[date.getMonth()];
+  return `${month}, ${year}`;
+};

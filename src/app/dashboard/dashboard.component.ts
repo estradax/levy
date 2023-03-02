@@ -3,20 +3,7 @@ import { AuthService } from '../lib/auth/auth.service';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { tap } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
-
-const months = [
-  'Jan',
-  'Feb',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sept',
-  'Oct',
-  'Nov',
-  'Dec',
-];
+import { formatDateToMatchedOurStyle } from '../lib/utils/utils';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,10 +15,9 @@ const months = [
 export class DashboardComponent {
   userInfo$ = this.authService.userInfo$.pipe(
     tap((userInfo) => {
-      const createdAtAsDate = new Date(Date.parse(userInfo.created_at));
-      const year = createdAtAsDate.getFullYear();
-      const month = months[createdAtAsDate.getMonth()];
-      userInfo.created_at = `${month}, ${year}`;
+      userInfo.created_at = formatDateToMatchedOurStyle(
+        new Date(Date.parse(userInfo.created_at))
+      );
     })
   );
 
