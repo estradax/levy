@@ -37,16 +37,6 @@ export class PasswordResetComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const emailChanges$ =
-      this.passwordResetForm.controls.email.valueChanges.pipe(
-        tap(() => {
-          if (this.passwordResetForm.controls.email.valid) return;
-          this.alertService.open();
-        })
-      );
-
-    emailChanges$.subscribe();
-
     const token$ = this.route.paramMap.pipe(
       map((paramMap) => {
         if (!paramMap.has('token')) return null;
@@ -72,6 +62,14 @@ export class PasswordResetComponent implements OnInit {
           token: token as string,
           email: email as string,
         });
+      }),
+      tap(() => {
+        if (
+          this.passwordResetForm.controls.email.valid &&
+          this.passwordResetForm.controls.token.valid
+        )
+          return;
+        this.alertService.open();
       })
     );
 
