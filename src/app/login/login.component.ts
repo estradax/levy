@@ -26,7 +26,7 @@ export class LoginComponent {
 
   loginFormSubmit() {
     this.auth.login(this.loginForm.getRawValue()).subscribe({
-      error: () => this.alertService.open(),
+      error: (e) => this.alertService.openWith(e.message),
       next: () => this.router.navigate(['']).catch((err) => console.error(err)),
     });
   }

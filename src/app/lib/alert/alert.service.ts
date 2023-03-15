@@ -6,9 +6,13 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AlertService {
   isOpen$ = new BehaviorSubject(false);
-
-  // FIXME: Add a way to pass in a message
+  message$ = new BehaviorSubject('Default message');
   open() {
+    this.isOpen$.next(true);
+  }
+
+  openWith(message: string) {
+    this.message$.next(message);
     this.isOpen$.next(true);
   }
 

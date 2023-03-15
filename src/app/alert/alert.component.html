@@ -3,5 +3,5 @@
   class="levy-alert alert alert-danger"
   role="alert"
 >
-  Alert message placeholder
+  {{ alertService.message$ | async }}
 </div>
